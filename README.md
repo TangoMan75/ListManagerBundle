@@ -133,7 +133,7 @@ class DefaultController extends Controller
 
         // Optionally use json format
         $thead = '{
-            "items": [
+            "tds": [
                 {
                     "name": "username",
                     "label": "User",
@@ -146,6 +146,7 @@ class DefaultController extends Controller
                 },
                 {
                     "label": "Actions",
+	    			"roles": ["ROLE_ADMIN","ROLE_MANAGER"],
                     "colspan": 2
                 }
             ]
