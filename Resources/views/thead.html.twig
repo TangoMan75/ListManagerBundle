@@ -1,0 +1,44 @@
+{% if thead.items is defined and thead %}
+    <thead>
+    <tr>
+        {% for item in thead.items %}
+            {# Setting default way #}
+            {% if not item.way is defined %}
+                {% set itemWay = 'ASC' %}
+            {% else %}
+                {% if item.way != 'ASC' and item.way != 'DESC' %}
+                    {% set itemWay = 'ASC' %}
+                {% else %}
+                    {% set itemWay = item.way %}
+                {% endif %}
+            {% endif %}
+            {% if item.route is defined and item.route %}
+                <th{% if item.colspan is defined and item.colspan %} colspan="{{ item.colspan }}"{% endif %}
+                        class="{{ app.request.query.get('order') == item.name ? app.request.query.get('way', itemWay) }}{% if item.class is defined and item.class %} {{ item.class }}{% endif %}">
+                    <a href="{{ path(item.route, app.request.query.all|merge({
+                        'page'  : 1,
+                        'order' : item.name,
+                        'way'   : app.request.query.get('order') == item.name
+                        and app.request.query.get('way', itemWay) == 'ASC' ? 'DESC' : 'ASC'})) }}">
+                        {% if item.icon is defined and item.icon %}
+                            <span class="{{ item.icon }}"></span>
+                        {% endif %}
+                        {% if item.label is defined and item.label %}
+                            {{ item.label|trans }}
+                        {% endif %}
+                    </a>
+                </th>
+            {% else %}
+                <th{% if item.colspan is defined and item.colspan %} colspan="{{ item.colspan }}"{% endif %}>
+                    {% if item.icon is defined and item.icon %}
+                        <span class="{{ item.icon }}"></span>
+                    {% endif %}
+                    {% if item.label is defined and item.label %}
+                        {{ item.label|trans }}
+                    {% endif %}
+                </th>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    </thead>
+{% endif %}
