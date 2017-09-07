@@ -21,8 +21,7 @@
                             <select name="{{ input.name }}" id="select-{{ input.name }}"
                                     class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}form-control{% endif %}"
                                     {% if input.auto is defined and input.auto %} onchange="this.input.submit()"{% endif %}
-                                    {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                            >
+                                    {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %} >
                                 {% if input.placeholder is defined and input.placeholder %}
                                     <option value="">
                                         {{ input.placeholder|trans }}
@@ -91,13 +90,14 @@
         {% endfor %}
         {# BUTTONS #}
         {% if hasbuttons %}
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-right pull-right" style="padding: 2.2rem 1.8rem 0 0;">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-right pull-right" style="padding: 2.2rem 0.8rem 0 0;">
                 {% for input in form.inputs %}
                     {% if is_granted(input.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
                         {% if input.type == 'submit' or input.type == 'button' %}
                             <button type="{{ input.type }}"
                                     {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-primary{% endif %}">
+                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-primary{% endif %}"
+                                    style="margin-right: 1rem;">
                                 {% if input.icon is defined and input.icon %}
                                     <span class="{{ input.icon }}" aria-hidden="true"></span>
                                 {% endif %}
@@ -106,7 +106,8 @@
                         {% elseif input.type == 'reset' %}
                             <button id="{{ input.type }}"
                                     {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-warning{% endif %}">
+                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-warning{% endif %}"
+                                    style="margin-right: 1rem;">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 Effacer
                             </button>
