@@ -1,126 +1,124 @@
-{% if form.inputs is defined and form %}
-    <form method="GET" class="clearfix{% if form.class is defined and form.class %} {{ form.class }}{% endif %}">
-        {% set hasbuttons = false %}
-        {% for input in form.inputs %}
-            {% if is_granted(input.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
-                {% if input.type == 'select' %}
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                        {# LABEL #}
-                        {% if input.label is defined and input.label %}
-                            <label class="control-label" for="select-{{ input.name }}">{{ input.label|trans }}</label>
-                        {% endif %}
-                        {# GROUP #}
-                        <div{% if input.icon is defined and input.icon %} class="input-group"{% endif %}{% if input.label is defined and input.label %}{% else %} style="padding-top: 1.7em"{% endif %}>
-                            {# ICON #}
-                            {% if input.icon is defined and input.icon %}
-                                <label for="select-{{ input.name }}" class="input-group-addon">
-                                    <span class="{{ input.icon }}" aria-hidden="true"></span>
-                                </label>
-                            {% endif %}
-                            {# SELECT #}
-                            <select name="{{ input.name }}" id="select-{{ input.name }}"
-                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}form-control{% endif %}"
-                                    {% if input.auto is defined and input.auto %} onchange="this.input.submit()"{% endif %}
-                                    {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %} >
-                                {% if input.placeholder is defined and input.placeholder %}
-                                    <option value="">
-                                        {{ input.placeholder|trans }}
-                                    </option>
-                                {% endif %}
-                                {# OPTIONS #}
-                                {% for option in input.options %}
-                                    <option value="{{ option.value }}"
-                                            {% if app.request.get(input.name) == option.value %}selected{% endif %}>
-                                        {{ option.name }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    {# CHECKBOXES #}
-                {% elseif input.type == 'checkbox' %}
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                        <div class="checkbox" style="padding-top: 2rem;">
-                            <label>
-                                <input type="checkbox"
-                                       name="{{ input.name }}"
-                                       id="checkbox-{{ input.name }}"
-                                       {% if input.class is defined and input.class %}class="{{ input.class }}"{% endif %}
-                                "
-                                {% if input.auto is defined and input.auto %} onchange="this.form.submit()"{% endif %}
-                                {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                                value="{{ app.request.get(input.name) }}">
-                                {% if input.label is defined and input.label %}
-                                    {{ input.label|trans }}
-                                {% endif %}
-                            </label>
-                        </div>
-                    </div>
-                    {# INPUTS #}
-                {% elseif input.type != 'submit' and input.type != 'reset' and input.type != 'button' %}
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                        {% if input.label is defined and input.label %}
-                            <label class="control-label" for="input-{{ input.name }}">
-                                {{ input.label|trans }}
-                            </label>
-                        {% endif %}
-                        <div{% if input.icon is defined and input.icon %} class="input-group"{% endif %}{% if input.label is defined and input.label %}{% else %} style="padding-top: 1.7em"{% endif %}>
-                            {% if input.icon is defined and input.icon %}
-                                <label for="input-{{ input.name }}" class="input-group-addon">
-                                    <span class="{{ input.icon }}" aria-hidden="true"></span>
-                                </label>
-                            {% endif %}
-                            <input type="{{ input.type }}"
-                                   name="{{ input.name }}"
-                                   id="input-{{ input.name }}"
-                                   class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}form-control{% endif %}"
-                                    {% if input.auto is defined and input.auto %} onblur="this.form.submit()"{% endif %}
-                                    {% if input.placeholder is defined and input.placeholder %} placeholder="{{ input.placeholder }}"{% endif %}
-                                    {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                                   value="{{ app.request.get(input.name)|join(', ') }}"
-                            />
-                        </div>
-                    </div>
-                {% endif %}
-                {# FLAGS TO GROUP BUTTONS #}
-                {% if input.type == 'submit' or input.type == 'reset' or input.type == 'button' %}
-                    {% set hasbuttons = true %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        {# BUTTONS #}
-        {% if hasbuttons %}
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-right pull-right" style="padding: 2.2rem 0.8rem 0 0;">
-                {% for input in form.inputs %}
-                    {% if is_granted(input.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
-                        {% if input.type == 'submit' or input.type == 'button' %}
-                            <button type="{{ input.type }}"
-                                    {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-primary{% endif %}"
-                                    style="margin-right: 1rem;">
-                                {% if input.icon is defined and input.icon %}
-                                    <span class="{{ input.icon }}" aria-hidden="true"></span>
-                                {% endif %}
-                                {{ input.label|trans }}
-                            </button>
-                        {% elseif input.type == 'reset' %}
-                            <button id="{{ input.type }}"
-                                    {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
-                                    class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-warning{% endif %}"
-                                    style="margin-right: 1rem;">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                Effacer
-                            </button>
-                        {% endif %}
+<form method="GET" class="clearfix{% if form.class is defined and form.class %} {{ form.class }}{% endif %}">
+    {% set hasbuttons = false %}
+    {% for input in form.inputs %}
+        {% if is_granted(input.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
+            {% if input.type == 'select' %}
+                <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    {# LABEL #}
+                    {% if input.label is defined and input.label %}
+                        <label class="control-label" for="select-{{ input.name }}">{{ input.label|trans }}</label>
                     {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-        {# Appending query parameters when submitting form instead of replacing them, removing empty values #}
-        {% for index, value in app.request.query.all %}
-            {% if value != '' and index == 'page' or index == 'limit' or index == 'order' or index == 'way' %}
-                <input type="hidden" name="{{ index }}" value="{{ value }}">
+                    {# GROUP #}
+                    <div{% if input.icon is defined and input.icon %} class="input-group"{% endif %}{% if input.label is defined and input.label %}{% else %} style="padding-top: 1.7em"{% endif %}>
+                        {# ICON #}
+                        {% if input.icon is defined and input.icon %}
+                            <label for="select-{{ input.name }}" class="input-group-addon">
+                                <span class="{{ input.icon }}" aria-hidden="true"></span>
+                            </label>
+                        {% endif %}
+                        {# SELECT #}
+                        <select name="{{ input.name }}" id="select-{{ input.name }}"
+                                class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}form-control{% endif %}"
+                                {% if input.auto is defined and input.auto %} onchange="this.input.submit()"{% endif %}
+                                {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %} >
+                            {% if input.placeholder is defined and input.placeholder %}
+                                <option value="">
+                                    {{ input.placeholder|trans }}
+                                </option>
+                            {% endif %}
+                            {# OPTIONS #}
+                            {% for option in input.options %}
+                                <option value="{{ option.value }}"
+                                        {% if app.request.get(input.name) == option.value %}selected{% endif %}>
+                                    {{ option.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {# CHECKBOXES #}
+            {% elseif input.type == 'checkbox' %}
+                <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="checkbox" style="padding-top: 2rem;">
+                        <label>
+                            <input type="checkbox"
+                                   name="{{ input.name }}"
+                                   id="checkbox-{{ input.name }}"
+                                   {% if input.class is defined and input.class %}class="{{ input.class }}"{% endif %}
+                            "
+                            {% if input.auto is defined and input.auto %} onchange="this.form.submit()"{% endif %}
+                            {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
+                            value="{{ app.request.get(input.name) }}">
+                            {% if input.label is defined and input.label %}
+                                {{ input.label|trans }}
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
+                {# INPUTS #}
+            {% elseif input.type != 'submit' and input.type != 'reset' and input.type != 'button' %}
+                <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    {% if input.label is defined and input.label %}
+                        <label class="control-label" for="input-{{ input.name }}">
+                            {{ input.label|trans }}
+                        </label>
+                    {% endif %}
+                    <div{% if input.icon is defined and input.icon %} class="input-group"{% endif %}{% if input.label is defined and input.label %}{% else %} style="padding-top: 1.7em"{% endif %}>
+                        {% if input.icon is defined and input.icon %}
+                            <label for="input-{{ input.name }}" class="input-group-addon">
+                                <span class="{{ input.icon }}" aria-hidden="true"></span>
+                            </label>
+                        {% endif %}
+                        <input type="{{ input.type }}"
+                               name="{{ input.name }}"
+                               id="input-{{ input.name }}"
+                               class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}form-control{% endif %}"
+                                {% if input.auto is defined and input.auto %} onblur="this.form.submit()"{% endif %}
+                                {% if input.placeholder is defined and input.placeholder %} placeholder="{{ input.placeholder }}"{% endif %}
+                                {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
+                               value="{{ app.request.get(input.name)|join(', ') }}"
+                        />
+                    </div>
+                </div>
             {% endif %}
-        {% endfor %}
-    </form>
-{% endif %}
+            {# FLAGS TO GROUP BUTTONS #}
+            {% if input.type == 'submit' or input.type == 'reset' or input.type == 'button' %}
+                {% set hasbuttons = true %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {# BUTTONS #}
+    {% if hasbuttons %}
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-right pull-right" style="padding: 2.2rem 0.8rem 0 0;">
+            {% for input in form.inputs %}
+                {% if is_granted(input.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
+                    {% if input.type == 'submit' or input.type == 'button' %}
+                        <button type="{{ input.type }}"
+                                {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
+                                class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-primary{% endif %}"
+                                style="margin-right: 1rem;">
+                            {% if input.icon is defined and input.icon %}
+                                <span class="{{ input.icon }}" aria-hidden="true"></span>
+                            {% endif %}
+                            {{ input.label|trans }}
+                        </button>
+                    {% elseif input.type == 'reset' %}
+                        <button id="{{ input.type }}"
+                                {% if input.disabled is defined and input.disabled %} disabled="disabled"{% endif %}
+                                class="{% if input.class is defined and input.class %}{{ input.class }}{% else %}btn btn-warning{% endif %}"
+                                style="margin-right: 1rem;">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            Effacer
+                        </button>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {# Appending query parameters when submitting form instead of replacing them, removing empty values #}
+    {% for index, value in app.request.query.all %}
+        {% if value != '' and index == 'page' or index == 'limit' or index == 'order' or index == 'way' %}
+            <input type="hidden" name="{{ index }}" value="{{ value }}">
+        {% endif %}
+    {% endfor %}
+</form>

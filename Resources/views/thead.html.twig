@@ -1,47 +1,45 @@
-{% if thead.ths is defined and thead %}
-    <thead>
-    <tr>
-        {% for th in thead.ths %}
-            {% if is_granted(th.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
-                {# Setting default way #}
-                {% if not th.way is defined %}
+<thead>
+<tr>
+    {% for th in thead.ths %}
+        {% if is_granted(th.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
+            {# Setting default way #}
+            {% if not th.way is defined %}
+                {% set thWay = 'ASC' %}
+            {% else %}
+                {% if th.way != 'ASC' and th.way != 'DESC' %}
                     {% set thWay = 'ASC' %}
                 {% else %}
-                    {% if th.way != 'ASC' and th.way != 'DESC' %}
-                        {% set thWay = 'ASC' %}
-                    {% else %}
-                        {% set thWay = th.way %}
-                    {% endif %}
+                    {% set thWay = th.way %}
                 {% endif %}
-                {% if th.route is defined and th.route %}
-                    <th{% if th.colspan is defined and th.colspan %} colspan="{{ th.colspan }}"{% endif %}
-                            class="{{ app.request.query.get('order') == th.name ? app.request.query.get('way', thWay) }}{% if th.class is defined and th.class %} {{ th.class }}{% endif %}">
-                        <a href="{{ path(th.route, app.request.query.all|merge({
-                            'page'  : 1,
-                            'order' : th.name,
-                            'way'   : app.request.query.get('order') == th.name
-                            and app.request.query.get('way', thWay) == 'ASC' ? 'DESC' : 'ASC'})) }}">
-                            {% if th.icon is defined and th.icon %}
-                                <span class="{{ th.icon }}"></span>
-                            {% endif %}
-                            {% if th.label is defined and th.label %}
-                                {{ th.label|trans }}
-                            {% endif %}
-                        </a>
-                    </th>
-                {% else %}
-                    <th{% if th.colspan is defined and th.colspan %} colspan="{{ th.colspan }}"{% endif %}>
+            {% endif %}
+            {% if th.route is defined and th.route %}
+                <th{% if th.colspan is defined and th.colspan %} colspan="{{ th.colspan }}"{% endif %}
+                        class="{{ app.request.query.get('order') == th.name ? app.request.query.get('way', thWay) }}{% if th.class is defined and th.class %} {{ th.class }}{% endif %}">
+                    <a href="{{ path(th.route, app.request.query.all|merge({
+                        'page'  : 1,
+                        'order' : th.name,
+                        'way'   : app.request.query.get('order') == th.name
+                        and app.request.query.get('way', thWay) == 'ASC' ? 'DESC' : 'ASC'})) }}">
                         {% if th.icon is defined and th.icon %}
                             <span class="{{ th.icon }}"></span>
                         {% endif %}
                         {% if th.label is defined and th.label %}
                             {{ th.label|trans }}
                         {% endif %}
-                    </th>
-                {% endif %}
+                    </a>
+                </th>
+            {% else %}
+                <th{% if th.colspan is defined and th.colspan %} colspan="{{ th.colspan }}"{% endif %}>
+                    {% if th.icon is defined and th.icon %}
+                        <span class="{{ th.icon }}"></span>
+                    {% endif %}
+                    {% if th.label is defined and th.label %}
+                        {{ th.label|trans }}
+                    {% endif %}
+                </th>
             {% endif %}
+        {% endif %}
 
-        {% endfor %}
-    </tr>
-    </thead>
-{% endif %}
+    {% endfor %}
+</tr>
+</thead>
