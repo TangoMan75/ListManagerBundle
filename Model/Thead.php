@@ -12,14 +12,39 @@ use TangoMan\ListManagerBundle\Model\Th;
 class Thead implements \JsonSerializable
 {
     /**
+     * Classes to be applied
+     * e.g.: 'my-class bootstrap-class'
+     *
+     * @var string
+     */
+    private $class;
+
+    /**
+     * <th> tags collection
+     *
      * @var array
      */
     private $ths = [];
 
     /**
-     * @var string
+     * @return string
      */
-    private $class;
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return Thead
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
 
     /**
      * @param array $ths
@@ -82,26 +107,6 @@ class Thead implements \JsonSerializable
             $remove[] = $th;
             $this->ths = array_diff($ths, $remove);
         }
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return Thead
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
 
         return $this;
     }

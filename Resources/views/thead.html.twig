@@ -13,8 +13,11 @@
                 {% endif %}
             {% endif %}
             {% if th.route is defined and th.route %}
-                <th{% if th.colspan is defined and th.colspan %} colspan="{{ th.colspan }}"{% endif %}
-                        class="{{ app.request.query.get('order') == th.name ? app.request.query.get('way', thWay) }}{% if th.class is defined and th.class %} {{ th.class }}{% endif %}">
+                <th{% if th.colspan is defined and th.colspan %}
+                    colspan="{{ th.colspan }}"
+                        {% endif %}{% if app.request.query.get('order') %}
+                    class="{{ app.request.query.get('order') == th.name ? app.request.query.get('way', thWay) }}"
+                        {% endif %}>
                     <a href="{{ path(th.route, app.request.query.all|merge({
                         'page'  : 1,
                         'order' : th.name,
@@ -39,7 +42,6 @@
                 </th>
             {% endif %}
         {% endif %}
-
     {% endfor %}
 </tr>
 </thead>

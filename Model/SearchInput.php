@@ -22,6 +22,8 @@ class SearchInput implements \JsonSerializable
     private $name;
 
     /**
+     * Label to be displayed
+     *
      * @var string
      */
     private $label;

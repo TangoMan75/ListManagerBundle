@@ -39,6 +39,9 @@ class ListManagerExtension extends \Twig_Extension
             new \Twig_SimpleFunction(
                 'thead', [$this, 'theadFunction'], ['is_safe' => ['html']]
             ),
+            new \Twig_SimpleFunction(
+                'buttons', [$this, 'buttonsFunction'], ['is_safe' => ['html']]
+            ),
         ];
     }
 
@@ -59,9 +62,10 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         return $this->template->render(
-            $template, [
-                         'form' => $form,
-                     ]
+            $template,
+            [
+                'form' => $form,
+            ]
         );
     }
 
@@ -82,9 +86,34 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         return $this->template->render(
-            $template, [
-                         'thead' => $thead,
-                     ]
+            $template,
+            [
+                'thead' => $thead,
+            ]
+        );
+    }
+
+    /**
+     * @param        $buttons
+     * @param string $template
+     *
+     * @return string
+     */
+    public function buttonsFunction($buttons, $template = 'buttons')
+    {
+        if ($template == 'buttons') {
+            $template = '@TangoManListManager/'.$template.'.html.twig';
+        }
+
+        if (is_string($buttons)) {
+            $buttons = json_decode($buttons);
+        }
+
+        return $this->template->render(
+            $template,
+            [
+                'buttons' => $buttons,
+            ]
         );
     }
 }

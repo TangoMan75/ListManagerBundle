@@ -1,0 +1,42 @@
+{% if is_granted(app.user.roles, buttonGroup.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
+    {% if multi_start_with(app.request.attributes.get('_route'), buttonGroup.pages ?? []) %}
+        <div class="btn-group" role="group">
+            {% for button in buttonGroup.buttons %}
+                {% if is_granted(button.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
+                    <a
+                    {% if button.route is defined and button.route %}
+                        {% if button.callback is defined and button.callback %}
+                            href="{{ path(button.route, { 'callback': app.request.uri|callback }) }}"
+                        {% elseif button.id is defined and button.id %}
+                            href="{{ path(button.route, { 'id': button.id, 'callback': app.request.uri|callback }) }}"
+                        {% elseif button.slug is defined and button.slug %}
+                            href="{{ path(button.route, { 'slug': button.parameter.slug, 'callback': app.request.uri|callback }) }}"
+                        {% else %}
+                            href="{{ path(button.route) }}"
+                        {% endif %}
+                    {% endif %}
+                    class="{{ button.class ?? 'btn btn-primary' }}"
+                    {% if button.toggle is defined and button.toggle %}
+                        data-toggle="{{ button.toggle }}"
+                        {% if button.target is defined and button.target %}
+                            data-target="{{ button.target }}"
+                        {% endif %}
+                    {% elseif button.tooltip is defined and button.tooltip %}
+                        data-toggle="tooltip" data-placement="top"
+                        data-original-title="{{ button.tooltip }}"
+                    {% endif %}
+                    role="button"
+                    >
+                    {% if button.icon is defined and button.icon %}
+                        <span class="{{ button.icon }}"></span>
+                    {% endif %}
+                    {% if button.label is defined and button.label %}
+                        <span{% if button.icon is defined and button.icon %} class="hidden-xs"{% endif %}>{{ button.label|trans }}</span>
+                    {% endif %}
+                {% endif %}
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}

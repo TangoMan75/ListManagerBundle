@@ -10,6 +10,8 @@ namespace TangoMan\ListManagerBundle\Model;
 class Th implements \JsonSerializable
 {
     /**
+     * Entity name to be used with orderBy
+     *
      * @var string
      */
     private $name;
@@ -31,6 +33,7 @@ class Th implements \JsonSerializable
 
     /**
      * Roles granted privilege to see item
+     * (null = no restrictions)
      * e.g: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
      *
      * @var array
@@ -38,16 +41,16 @@ class Th implements \JsonSerializable
     private $roles = [];
 
     /**
+     * OrderBy default way
+     * e.g.: 'ASC'
+     *
      * @var string
      */
     private $way;
 
     /**
-     * @var string
-     */
-    private $class;
-
-    /**
+     * Add colspan attribute to <th> tag
+     *
      * @var integer
      */
     private $colspan;
@@ -185,26 +188,6 @@ class Th implements \JsonSerializable
     /**
      * @return string
      */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return $this
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getRoute()
     {
         return $this->route;
@@ -262,10 +245,6 @@ class Th implements \JsonSerializable
 
         if ($this->way) {
             $json['way'] = $this->way;
-        }
-
-        if ($this->class) {
-            $json['class'] = $this->class;
         }
 
         if ($this->colspan) {
