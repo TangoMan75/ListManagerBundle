@@ -86,6 +86,14 @@ class Button implements \JsonSerializable
     private $target;
 
     /**
+     * data-text attribute
+     * e.g: myModal
+     *
+     * @var string
+     */
+    private $text;
+
+    /**
      * Disabled button
      *
      * @var bool
@@ -302,6 +310,26 @@ class Button implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return Button
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isDisabled()
@@ -430,6 +458,10 @@ class Button implements \JsonSerializable
 
         if ($this->target) {
             $json['target'] = $this->target;
+        }
+
+        if ($this->text) {
+            $json['text'] = $this->text;
         }
 
         if ($this->disabled) {

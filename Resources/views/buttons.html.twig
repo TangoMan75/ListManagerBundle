@@ -12,7 +12,7 @@
                 <a
                 {% if button.route is defined and button.route %}
                     {# WHEN MODAL REPLACE HREF WITH DATA-PATH ATTRIBUTE #}
-                    {% if button.toggle is defined and button.toggle == 'modal' %}{% set dataHref = 'data-path' %}{% endif %}
+                    {% if button.toggle is defined and button.toggle == 'modal' %}{% set dataHref = 'data-href' %}{% endif %}
                     {# ID AND SLUG HAVE AUTO CALLBACK #}
                     {% if button.callback is defined and button.callback %}
                         {{ dataHref ?? 'href' }}="{{ path(button.route, { 'callback': app.request.uri|callback }) }}"
@@ -34,6 +34,9 @@
                 {% elseif button.tooltip is defined and button.tooltip %}
                     data-toggle="tooltip" data-placement="top"
                     data-original-title="{{ button.tooltip }}"
+                {% endif %}
+                {% if button.text is defined and button.text %}
+                    data-text="{{ button.text }}"
                 {% endif %}
                 role="button"
                 >
@@ -63,7 +66,7 @@
                         <a
                         {% if button.route is defined and button.route %}
                             {# WHEN MODAL REPLACE HREF WITH DATA-PATH ATTRIBUTE #}
-                            {% if button.toggle is defined and button.toggle == 'modal' %}{% set dataHref = 'data-path' %}{% endif %}
+                            {% if button.toggle is defined and button.toggle == 'modal' %}{% set dataHref = 'data-href' %}{% endif %}
                             {# ID AND SLUG HAVE AUTO CALLBACK #}
                             {% if button.callback is defined and button.callback %}
                                 {{ dataHref ?? 'href' }}="{{ path(button.route, { 'callback': app.request.uri|callback }) }}"
@@ -85,6 +88,9 @@
                         {% elseif button.tooltip is defined and button.tooltip %}
                             data-toggle="tooltip" data-placement="top"
                             data-original-title="{{ button.tooltip }}"
+                        {% endif %}
+                        {% if button.text is defined and button.text %}
+                            data-text="{{ button.text }}"
                         {% endif %}
                         role="button"
                         >
