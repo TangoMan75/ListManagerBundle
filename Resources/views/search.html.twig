@@ -2,7 +2,9 @@
     {% set hasbuttons = false %}
     {% for input in form.inputs %}
         {% if is_granted(input.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
-            {% if input.type == 'select' %}
+            {% if input.type == 'divider' %}
+                <div class="clearfix"></div>
+            {% elseif input.type == 'select' %}
                 <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
                     {# LABEL #}
                     {% if input.label is defined and input.label %}

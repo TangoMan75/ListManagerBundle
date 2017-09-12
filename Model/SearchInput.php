@@ -71,6 +71,7 @@ class SearchInput implements \JsonSerializable
                 'date',
                 'datetime',
                 'datetime-local',
+                'divider',
                 'email',
                 'file',
                 'keygen',

@@ -94,25 +94,25 @@ class ListManagerExtension extends \Twig_Extension
     }
 
     /**
-     * @param        $buttons
+     * @param        $buttonGroup
      * @param string $template
      *
      * @return string
      */
-    public function buttonsFunction($buttons, $template = 'buttons')
+    public function buttonsFunction($buttonGroup, $template = 'buttons')
     {
         if ($template == 'buttons') {
             $template = '@TangoManListManager/'.$template.'.html.twig';
         }
 
-        if (is_string($buttons)) {
-            $buttons = json_decode($buttons);
+        if (is_string($buttonGroup)) {
+            $buttonGroup = json_decode($buttonGroup);
         }
 
         return $this->template->render(
             $template,
             [
-                'buttons' => $buttons,
+                'buttonGroup' => $buttonGroup,
             ]
         );
     }
