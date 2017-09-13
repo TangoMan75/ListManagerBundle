@@ -10,6 +10,14 @@ namespace TangoMan\ListManagerBundle\Model;
 class Button implements \JsonSerializable
 {
     /**
+     * Button type
+     * e.g.: 'button', 'dismiss', 'reset', 'submit'
+     *
+     * @var string
+     */
+    private $type;
+
+    /**
      * Font icon
      * e.g: 'glyphicon glyphicon-user'
      *
@@ -112,6 +120,26 @@ class Button implements \JsonSerializable
     /**
      * @return string
      */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Button
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getIcon()
     {
         return $this->icon;
@@ -120,7 +148,7 @@ class Button implements \JsonSerializable
     /**
      * @param string $icon
      *
-     * @return Button
+     * @return $this
      */
     public function setIcon($icon)
     {
@@ -160,7 +188,7 @@ class Button implements \JsonSerializable
     /**
      * @param string $class
      *
-     * @return Button
+     * @return $this
      */
     public function setClass($class)
     {
@@ -180,7 +208,7 @@ class Button implements \JsonSerializable
     /**
      * @param string $tooltip
      *
-     * @return Button
+     * @return $this
      */
     public function setTooltip($tooltip)
     {
@@ -320,7 +348,7 @@ class Button implements \JsonSerializable
     /**
      * @param string $text
      *
-     * @return Button
+     * @return $this
      */
     public function setText($text)
     {

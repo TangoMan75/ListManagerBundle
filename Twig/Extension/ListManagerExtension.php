@@ -99,9 +99,9 @@ class ListManagerExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function buttonsFunction($buttonGroup, $template = 'buttons')
+    public function buttonsFunction($buttonGroup, $template = 'button-group')
     {
-        if ($template == 'buttons') {
+        if ($template == 'button-group') {
             $template = '@TangoManListManager/'.$template.'.html.twig';
         }
 

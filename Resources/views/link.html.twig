@@ -1,0 +1,50 @@
+{% if is_granted(link.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
+    {# WRAPPING <A> WITH <SPAN> WHEN USING TOOLTIPS AND TOGGLES TOGETHER #}
+    {% if link.toggle is defined and link.toggle and link.tooltip is defined and link.tooltip %}
+            <span style="display: inline-block;"
+            data-toggle="tooltip" data-placement="top"
+            data-original-title="{{ link.tooltip }}"
+            >
+    {% endif %}
+        <a
+    {% if link.route is defined and link.route %}
+        {# WHEN MODAL REPLACE HREF WITH DATA-PATH ATTRIBUTE #}
+        {% if link.toggle is defined and link.toggle == 'modal' %}{% set dataHref = 'data-href' %}{% endif %}
+        {# ID AND SLUG HAVE AUTO CALLBACK #}
+        {% if link.callback is defined and link.callback %}
+            {{ dataHref ?? 'href' }}="{{ path(link.route, { 'callback': app.request.uri|callback }) }}"
+        {% elseif link.id is defined and link.id %}
+            {{ dataHref ?? 'href' }}="{{ path(link.route, { 'id': link.id, 'callback': app.request.uri|callback }) }}"
+        {% elseif link.slug is defined and link.slug %}
+            {{ dataHref ?? 'href' }}="{{ path(link.route, { 'slug': link.parameter.slug, 'callback': app.request.uri|callback }) }}"
+        {% else %}
+            {{ dataHref ?? 'href' }}="{{ path(link.route) }}"
+        {% endif %}
+    {% endif %}
+        class="{{ link.class ?? 'btn btn-primary' }}"
+    {# TOOLTIPS AND TOGGLES DO NOT WORK TOGETHER #}
+    {% if link.toggle is defined and link.toggle %}
+            data-toggle="{{ link.toggle }}"
+        {% if link.target is defined and link.target %}
+                data-target="{{ link.target }}"
+        {% endif %}
+    {% elseif link.tooltip is defined and link.tooltip %}
+            data-toggle="tooltip" data-placement="top"
+            data-original-title="{{ link.tooltip }}"
+    {% endif %}
+    {% if link.text is defined and link.text %}
+            data-text="{{ link.text }}"
+    {% endif %}
+    role="link"
+        >
+    {% if link.icon is defined and link.icon %}
+            <span class="{{ link.icon }}"></span>
+    {% endif %}
+    {% if link.label is defined and link.label %}
+            <span>{{ link.label|trans }}</span>
+    {% endif %}
+        </a>
+    {% if link.toggle is defined and link.toggle and link.tooltip is defined and link.tooltip %}
+            </span>
+    {% endif %}
+{% endif %}
