@@ -53,8 +53,13 @@ class ListManagerExtension extends \Twig_Extension
      */
     public function searchFormFunction($form, $template = 'search')
     {
-        if ($template == 'search') {
-            $template = '@TangoManListManager/'.$template.'.html.twig';
+        $templates = [
+            'search',
+            'default',
+        ];
+
+        if (in_array($template, $templates)) {
+            $template = '@TangoManMenu/'.$template.'.html.twig';
         }
 
         if (is_string($form)) {
@@ -77,8 +82,12 @@ class ListManagerExtension extends \Twig_Extension
      */
     public function theadFunction($thead, $template = 'thead')
     {
-        if ($template == 'thead') {
-            $template = '@TangoManListManager/'.$template.'.html.twig';
+        $templates = [
+            'thead',
+        ];
+
+        if (in_array($template, $templates)) {
+            $template = '@TangoManMenu/'.$template.'.html.twig';
         }
 
         if (is_string($thead)) {
@@ -101,8 +110,12 @@ class ListManagerExtension extends \Twig_Extension
      */
     public function buttonsFunction($buttonGroup, $template = 'button-group')
     {
-        if ($template == 'button-group') {
-            $template = '@TangoManListManager/'.$template.'.html.twig';
+        $templates = [
+            'button-group',
+        ];
+
+        if (in_array($template, $templates)) {
+            $template = '@TangoManMenu/'.$template.'.html.twig';
         }
 
         if (is_string($buttonGroup)) {

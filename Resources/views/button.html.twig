@@ -6,13 +6,19 @@
         data-original-title="{{ button.tooltip }}"
         >
     {% endif %}
-    {% if button.type == 'button' and if button.type == 'dismiss' and if button.type == 'reset' and if button.type == 'submit' %}
-        <button
+    {% if button.type is defined %}
+        {% if button.type == 'dismiss' %}
+            <button type="button" data-dismiss="modal"
+        {% elseif button.type == 'reset' or button.type == 'submit' or button.type == 'button' %}
+            <button type="{{ button.type }}"
+        {% else %}
+            <a
+        {% endif %}
     {% else %}
         <a
     {% endif %}
     {% if button.route is defined and button.route %}
-        {# WHEN MODAL REPLACE HREF WITH DATA-PATH ATTRIBUTE #}
+        {# WHEN MODAL REPLACE HREF WITH DATA-HREF ATTRIBUTE #}
         {% if button.toggle is defined and button.toggle == 'modal' %}{% set dataHref = 'data-href' %}{% endif %}
         {# ID AND SLUG HAVE AUTO CALLBACK #}
         {% if button.callback is defined and button.callback %}
@@ -45,13 +51,17 @@
     role="button"
     >
     {% if button.icon is defined and button.icon %}
-        <span class="{{ button.icon }}"></span>
+        <span class="{{ button.icon }}" aria-hidden="true"></span>
     {% endif %}
     {% if button.label is defined and button.label %}
         <span{% if button.icon is defined and button.icon %} class="hidden-xs"{% endif %}>{{ button.label|trans }}</span>
     {% endif %}
-    {% if button.type == 'button' and if button.type == 'dismiss' and if button.type == 'reset' and if button.type == 'submit' %}
-        </button>
+    {% if button.type is defined %}
+        {% if button.type == 'button' or button.type == 'dismiss' or button.type == 'reset' or button.type == 'submit' %}
+            </button>
+        {% else %}
+            </a>
+        {% endif %}
     {% else %}
         </a>
     {% endif %}
