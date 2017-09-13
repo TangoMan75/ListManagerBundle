@@ -42,6 +42,9 @@ class ListManagerExtension extends \Twig_Extension
             new \Twig_SimpleFunction(
                 'buttons', [$this, 'buttonsFunction'], ['is_safe' => ['html']]
             ),
+            new \Twig_SimpleFunction(
+                'modal', [$this, 'modalFunction'], ['is_safe' => ['html']]
+            ),
         ];
     }
 
@@ -112,6 +115,34 @@ class ListManagerExtension extends \Twig_Extension
     {
         $templates = [
             'button-group',
+        ];
+
+        if (in_array($template, $templates)) {
+            $template = '@TangoManMenu/'.$template.'.html.twig';
+        }
+
+        if (is_string($buttonGroup)) {
+            $buttonGroup = json_decode($buttonGroup);
+        }
+
+        return $this->template->render(
+            $template,
+            [
+                'buttonGroup' => $buttonGroup,
+            ]
+        );
+    }
+
+    /**
+     * @param        $buttonGroup
+     * @param string $template
+     *
+     * @return string
+     */
+    public function modalFunction($buttonGroup, $template = 'modal')
+    {
+        $templates = [
+            'modal',
         ];
 
         if (in_array($template, $templates)) {
