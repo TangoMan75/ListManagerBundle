@@ -1,7 +1,7 @@
 {
 	"name": "tangoman/list-manager-bundle",
 	"description": "Symfony Searchable Paginated Ordered List Twig Extension Bundle",
-	"version": "2.1.1",
+	"version": "2.1.2",
 	"type": "symfony-bundle",
 	"keywords": [
 		"Searchable",
@@ -29,6 +29,7 @@
 		"php"                         : ">=5.4.0",
 		"symfony/framework-bundle"    : "~2.3|~3.0",
 		"twig/twig"                   : "~1.12|~2",
+		"tangoman/callback-bundle"    : "^1.0",
 		"tangoman/twig-helper-bundle" : "^1.0"
 	},
 	"autoload": {
