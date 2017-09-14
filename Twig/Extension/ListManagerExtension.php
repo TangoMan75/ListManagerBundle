@@ -62,7 +62,7 @@ class ListManagerExtension extends \Twig_Extension
         ];
 
         if (in_array($template, $templates)) {
-            $template = '@TangoManMenu/'.$template.'.html.twig';
+            $template = '@TangoManListManager/'.$template.'.html.twig';
         }
 
         if (is_string($form)) {
@@ -90,7 +90,7 @@ class ListManagerExtension extends \Twig_Extension
         ];
 
         if (in_array($template, $templates)) {
-            $template = '@TangoManMenu/'.$template.'.html.twig';
+            $template = '@TangoManListManager/'.$template.'.html.twig';
         }
 
         if (is_string($thead)) {
@@ -118,7 +118,7 @@ class ListManagerExtension extends \Twig_Extension
         ];
 
         if (in_array($template, $templates)) {
-            $template = '@TangoManMenu/'.$template.'.html.twig';
+            $template = '@TangoManListManager/'.$template.'.html.twig';
         }
 
         if (is_string($buttonGroup)) {
@@ -146,7 +146,7 @@ class ListManagerExtension extends \Twig_Extension
         ];
 
         if (in_array($template, $templates)) {
-            $template = '@TangoManMenu/'.$template.'.html.twig';
+            $template = '@TangoManListManager/'.$template.'.html.twig';
         }
 
         if (is_string($buttonGroup)) {
