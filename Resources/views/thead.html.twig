@@ -26,16 +26,29 @@
         border-bottom-color: transparent;
     }
 
-    .ordered-thead > tr > th.ASC a:after {
-        content: "\e253";
-        float: right;
-        font-family: 'Glyphicons Halflings';
+    .ordered-thead > tr > th {
+        position: relative;
     }
 
-    .ordered-thead > tr > th.DESC a:after {
-        content: "\e252";
-        float: right;
+    .ordered-thead > tr > th.ASC a,
+    .ordered-thead > tr > th.DESC a {
+        padding-right: 3rem;
+    }
+
+    .ordered-thead > tr > th a:before {
         font-family: 'Glyphicons Halflings';
+        position: relative;
+        float: right;
+        top: 2rem;
+        left: 2rem;
+    }
+
+    .ordered-thead > tr > th.ASC a:before {
+        content: "\e253";
+    }
+
+    .ordered-thead > tr > th.DESC a:before {
+        content: "\e252";
     }
 </style>
 <thead class="ordered-thead">
