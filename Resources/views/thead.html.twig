@@ -26,21 +26,9 @@
         border-bottom-color: transparent;
     }
 
-    .ordered-thead > tr > th {
-        position: relative;
-    }
-
-    .ordered-thead > tr > th.ASC a,
-    .ordered-thead > tr > th.DESC a {
-        padding-right: 3rem;
-    }
-
     .ordered-thead > tr > th a:before {
         font-family: 'Glyphicons Halflings';
-        position: relative;
         float: right;
-        top: 2rem;
-        left: 2rem;
     }
 
     .ordered-thead > tr > th.ASC a:before {
@@ -75,7 +63,7 @@
                         {% endif %}
                 >
                     <a href="{{ path(th.route, app.request.query.all|merge({
-                        'page'  : 1,
+                        'page'  : null,
                         'order' : th.name,
                         'way'   : app.request.query.get('order') == th.name
                         and app.request.query.get('way', thWay) == 'ASC' ? 'DESC' : 'ASC'})) }}"

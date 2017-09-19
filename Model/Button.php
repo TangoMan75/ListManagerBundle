@@ -33,6 +33,13 @@ class Button implements \JsonSerializable
     private $label;
 
     /**
+     * Text to be shown in badge
+     *
+     * @var string
+     */
+    private $badge;
+
+    /**
      * Button class
      * e.g.: 'btn btn-warning btn-sm'
      *
@@ -109,6 +116,14 @@ class Button implements \JsonSerializable
     private $disabled;
 
     /**
+     * Data attribute
+     * e.g.: data-foo="bar"
+     *
+     * @var array
+     */
+    private $data = [];
+
+    /**
      * Roles granted privilege to see item
      * (null = no restrictions)
      * e.g: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
@@ -173,6 +188,26 @@ class Button implements \JsonSerializable
     public function setLabel($label)
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBadge()
+    {
+        return $this->badge;
+    }
+
+    /**
+     * @param string $badge
+     *
+     * @return Button
+     */
+    public function setBadge($badge)
+    {
+        $this->badge = $badge;
 
         return $this;
     }
@@ -494,6 +529,10 @@ class Button implements \JsonSerializable
 
         if ($this->disabled) {
             $json['disabled'] = $this->disabled;
+        }
+
+        if (count($this->data)) {
+            $json['data'] = json_encode($this->data);
         }
 
         if (count($this->roles)) {

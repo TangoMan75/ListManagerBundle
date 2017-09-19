@@ -1,3 +1,5 @@
+{#{% set button_data = button.data|merge({"key":"foo","value":"bar"}) %}#}
+{#{% set button = button|merge({"data":button_data}) %}#}
 {% if is_granted(button.roles ?? ['IS_AUTHENTICATED_ANONYMOUSLY']) %}
     {# WRAPPING ELEMENT WITH <SPAN> WHEN USING TOOLTIP AND TOGGLE TOGETHER #}
     {% if button.toggle is defined and button.toggle and button.tooltip is defined and button.tooltip %}
@@ -42,8 +44,10 @@
         data-toggle="tooltip" data-placement="top"
         data-original-title="{{ button.tooltip }}"
     {% endif %}
-    {% if button.text is defined and button.text %}
-        data-text="{{ button.text }}"
+    {% if button.data is defined and button.data %}
+        {% for item in button.data %}
+            data-{{ item.key }}="{{ item.value ?? '' }}"
+        {% endfor %}
     {% endif %}
     {% if button.disabled is defined and button.disabled %}
         disabled="disabled"
@@ -54,15 +58,19 @@
         <span class="{{ button.icon }}" aria-hidden="true"></span>
     {% endif %}
     {% if button.label is defined and button.label %}
+        &nbsp;
         <span{% if button.icon is defined and button.icon %} class="hidden-xs"{% endif %}>{{ button.label|trans }}</span>
+    {% endif %}
+    {% if button.badge is defined and button.badge %}
+        &nbsp;<span class="badge">{{ button.badge }}</span>
     {% endif %}
     {% if button.type is defined %}
         {% if button.type == 'button' or button.type == 'dismiss' or button.type == 'reset' or button.type == 'submit' %}
             </button>
-        {% else %}
+{% else %}
             </a>
         {% endif %}
-    {% else %}
+{% else %}
         </a>
     {% endif %}
     {% if button.toggle is defined and button.toggle and button.tooltip is defined and button.tooltip %}
