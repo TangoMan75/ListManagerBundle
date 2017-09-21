@@ -19,12 +19,25 @@
         {% endif %}
         {# OPTIONS #}
         {% if input.options is defined and input.options %}
-            {% for option in input.options %}
-                <option value="{{ option.value }}"
-                        {% if app.request.get(input.name) == option.value %}selected{% endif %}>
-                    {{ option.name }}
-                </option>
-            {% endfor %}
-        {% endif %}
+                {% for group, option in input.options %}
+                    {% if option.value is not defined or option.name is not defined %}
+                        {% if not (group matches '#^[0-9]+$#') %}
+                            <optgroup label="{{ group }}">
+                            {% for opt in option %}
+                                <option value="{{ opt.value }}"
+                                        {% if app.request.get(input.name) == opt.value %}selected{% endif %}>
+                                    {{ opt.name }}
+                                </option>
+                            {% endfor %}
+                            </optgroup>
+                        {% endif %}
+                    {% else %}
+                    <option value="{{ option.value }}"
+                            {% if app.request.get(input.name) == option.value %}selected{% endif %}>
+                        {{ option.name }}
+                    </option>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
     </select>
 </div>
