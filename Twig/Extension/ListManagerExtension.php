@@ -66,7 +66,7 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         if (is_string($form)) {
-            $form = json_decode($form);
+            $form = json_decode($form, true);
         }
 
         return $this->template->render(
@@ -94,7 +94,7 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         if (is_string($thead)) {
-            $thead = json_decode($thead);
+            $thead = json_decode($thead, true);
         }
 
         return $this->template->render(
@@ -122,7 +122,8 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         if (is_string($buttonGroup)) {
-            $buttonGroup = json_decode($buttonGroup);
+            $buttonGroup = 
+                ($buttonGroup);
         }
 
         return $this->template->render(
@@ -150,7 +151,7 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         if (is_string($buttonGroup)) {
-            $buttonGroup = json_decode($buttonGroup);
+            $buttonGroup = json_decode($buttonGroup, true);
         }
 
         return $this->template->render(
