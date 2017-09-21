@@ -122,8 +122,7 @@ class ListManagerExtension extends \Twig_Extension
         }
 
         if (is_string($buttonGroup)) {
-            $buttonGroup = 
-                ($buttonGroup);
+            $buttonGroup = json_decode($buttonGroup,true);
         }
 
         return $this->template->render(
